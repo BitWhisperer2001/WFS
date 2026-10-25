@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chí | Embedded blog</title>
+<meta name="description" content="Blog về lập trình nhúng: Linux, MCU và các dự án cá nhân.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><text y=%27.9em%27 font-size=%2790%27>🔌</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('t')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}catch(e){}</script>
+<style>
+:root{--bg:#eef3f8;--grid:rgba(35,71,197,.08);--ink:#12203f;--mute:#55627d;--line:#c5d0e2;--acc:#2347c5;--hl:#ffd84d;--panel:#f9fbfe}
+:root[data-theme=dark]{--bg:#0a1a35;--grid:rgba(160,200,255,.07);--ink:#e6eefc;--mute:#93a6c9;--line:#27426f;--acc:#8ec5ff;--panel:#0e2245}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;color:var(--ink);font:400 17px/1.7 'Be Vietnam Pro',system-ui,sans-serif}
+.wrap{max-width:820px;margin:0 auto;padding:0 20px}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:18px;padding-bottom:10px}
+.logo{font-weight:800;font-size:1.2rem;color:var(--ink);text-decoration:none}
+nav{display:flex;gap:18px;align-items:center}
+nav a{color:var(--mute);text-decoration:none;border-bottom:2px solid transparent}
+nav a.on,nav a:hover{color:var(--ink);border-color:var(--acc)}
+button{font:inherit;cursor:pointer}
+#theme{background:var(--panel);border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:0 10px}
+a{color:var(--acc)}
+:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+.hero{padding:26px 0 4px}
+.hero h1{font-size:clamp(2.1rem,7vw,3.5rem);line-height:1.08;font-weight:800;margin:0 0 12px;letter-spacing:-.02em;max-width:14em}
+.hero p{max-width:34em;color:var(--mute);margin:0}
+.wave{width:100%;height:auto;margin-top:14px}
+.wave text{font:400 11px 'JetBrains Mono',monospace;fill:var(--mute)}
+.wave path{fill:none;stroke:var(--acc);stroke-width:2.2;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.4s ease-out forwards}
+.wave path+path{stroke:var(--ink);animation-delay:.5s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media(prefers-reduced-motion:reduce){.wave path{animation:none;stroke-dashoffset:0}}
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:26px 0 8px}
+input[type=search]{flex:1 1 200px;font:inherit;padding:8px 12px;border:1.5px solid var(--ink);background:var(--panel);color:var(--ink);border-radius:4px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font:600 .78rem 'Be Vietnam Pro',sans-serif;border:1px solid var(--line);background:var(--panel);color:var(--mute);padding:1px 10px;border-radius:99px;display:inline-block}
+button.tag{cursor:pointer}
+.tag.on{background:var(--hl);color:#12203f;border-color:var(--hl)}
+.post{display:grid;grid-template-columns:110px 1fr;gap:4px 20px;padding:18px 0;border-top:1px solid var(--line);text-decoration:none;color:inherit}
+.post time,.meta{color:var(--mute);font-size:.9rem}
+.post time{padding-top:4px}
+.post h3{margin:0;font-size:1.25rem;line-height:1.3}
+.post:hover h3{color:var(--acc);text-decoration:underline}
+.post p{margin:4px 0 8px;color:var(--mute);font-size:.97rem}
+@media(max-width:560px){.post{grid-template-columns:1fr}}
+.page{font-size:2rem;margin:26px 0 4px;line-height:1.2}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;margin:20px 0}
+.proj{position:relative;border:1.5px solid var(--ink);background:var(--panel);padding:24px 20px 16px}
+.proj::before{content:"";position:absolute;top:9px;left:9px;width:7px;height:7px;border-radius:50%;background:var(--ink)}
+.proj h3{margin:0 0 4px}
+.proj p{margin:0 0 10px;color:var(--mute);font-size:.95rem}
+.links{display:flex;gap:16px;margin-top:10px;font-weight:600}
+.back{display:inline-block;margin:10px 0}
+article h1{font-size:clamp(1.9rem,5vw,2.6rem);line-height:1.15;margin:6px 0 12px;letter-spacing:-.01em}
+.md{margin-top:24px}
+.md h2{font-size:1.5rem;margin:2em 0 .4em}.md h3{font-size:1.2rem;margin:1.6em 0 .3em}
+.md img{max-width:100%}
+.md blockquote{margin:1em 0;padding:2px 16px;border-left:4px solid var(--hl);color:var(--mute)}
+.md table{border-collapse:collapse;display:block;overflow-x:auto}
+.md th,.md td{border:1px solid var(--line);padding:6px 12px;text-align:left}
+.md code{font:.88em 'JetBrains Mono',monospace;background:var(--panel);border:1px solid var(--line);padding:1px 5px;border-radius:3px}
+.md pre{position:relative;background:#0b1426;color:#dbe6ff;padding:16px;overflow-x:auto;border-radius:4px;line-height:1.55}
+.md pre code{background:none;border:0;padding:0;color:inherit;font-size:.86rem}
+.cp{position:absolute;top:6px;right:6px;font-size:.75rem;background:#1c2b4d;color:#dbe6ff;border:0;border-radius:3px;padding:2px 8px}
+.hljs-keyword,.hljs-selector-tag{color:#7aa2f7}.hljs-string{color:#9ece6a}.hljs-comment{color:#6b7a99}.hljs-number,.hljs-literal{color:#ff9e64}.hljs-title,.hljs-function{color:#e0af68}.hljs-built_in,.hljs-type{color:#bb9af7}.hljs-meta{color:#f7768e}
+footer{margin:60px 0 30px;color:var(--mute);font-size:.9rem;border-top:1px solid var(--line);padding-top:16px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="#/" id="logo"></a>
+  <nav><a href="#/">Bài viết</a><a href="#/projects">Dự án</a><a href="#/about">Giới thiệu</a><button id="theme" aria-label="Đổi giao diện sáng/tối">◐</button></nav>
+</div></header>
+<main class="wrap" id="app"><noscript>Trang này cần bật JavaScript để hiển thị bài viết.</noscript></main>
+<footer class="wrap"><span id="foot"></span></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>
+/* ============ CHỈNH SỬA Ở ĐÂY ============ */
+const CONFIG = {
+  name: "Chí",
+  headline: "Viết về Linux, MCU và những thứ chạy trên chip",
+  bio: "Mình làm phần mềm nhúng. Blog này ghi lại kiến thức mình học được và các dự án đã làm.",
+  about: "Giới thiệu dài hơn về bạn: đang học gì, làm gì, mục tiêu nghề nghiệp. Sửa nội dung này trong CONFIG.about.",
+  skills: ["C/C++", "STM32", "Embedded Linux", "Device Tree", "I2C/SPI/UART", "FreeRTOS"],
+  github: "https://github.com/USERNAME",
+  email: "ban@example.com",
+
+  /* Mỗi bài: slug (không dấu, không khoảng trắng), title, date (YYYY-MM-DD), tags, summary.
+     Nội dung: dùng "file" trỏ tới posts/ten-bai.md, hoặc "content" viết trực tiếp. */
+  posts: [
+    { slug: "chao-mung", title: "Chào mừng đến với blog", date: "2026-10-25", tags: ["Giới thiệu"],
+      summary: "Cách thêm bài viết mới vào blog này.",
+      content: `
+Đây là bài mẫu. Để thêm bài mới:
+
+1. Tạo file **posts/ten-bai.md** trong repo.
+2. Thêm một dòng vào mảng **CONFIG.posts** trong index.html.
+3. Commit, đợi GitHub Pages cập nhật.
+
+Bài viết dùng Markdown: **in đậm**, *in nghiêng*, [liên kết](https://github.com), danh sách, bảng, ảnh và khối code.
+` },
+    { slug: "blink-led-stm32", title: "Nhấp nháy LED trên STM32 với HAL", date: "2026-10-20", tags: ["MCU", "STM32"],
+      summary: "Chương trình nhúng đầu tiên: bật tắt chân GPIO mỗi 500 ms.",
+      content: `
+Vòng lặp chính chỉ cần đảo trạng thái chân LED rồi chờ.
+
+~~~c
+#include "main.h"
+
+int main(void) {
+  HAL_Init();
+  SystemClock_Config();
+  MX_GPIO_Init();
+
+  while (1) {
+    HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+    HAL_Delay(500); /* ms */
+  }
+}
+~~~
+
+> Tên **LED_GPIO_Port** và **LED_Pin** do CubeMX sinh ra theo nhãn chân bạn đặt.
+` },
+    { slug: "linux-source-tree", title: "Đọc bản đồ Linux source tree", date: "2026-10-15", tags: ["Linux", "Kernel"],
+      summary: "Các thư mục chính của mã nguồn kernel và chỗ nên tìm code cho board ARM.",
+      content: `
+Khi mới mở kernel, hãy nhớ vài thư mục sau:
+
+| Thư mục | Nội dung |
+|---|---|
+| arch/arm | Code riêng cho kiến trúc ARM 32-bit, gồm cả device tree |
+| drivers | Driver thiết bị, chiếm phần lớn mã nguồn |
+| include | Header dùng chung |
+| Documentation | Tài liệu, kể cả binding của device tree |
+
+Lệnh tìm nhanh một symbol:
+
+~~~bash
+grep -rn "of_match_table" drivers/gpio | head
+~~~
+` }
+  ],
+
+  projects: [
+    { name: "Trạm cảm biến nhiệt độ (mẫu)", desc: "Đọc cảm biến qua I2C, gửi dữ liệu qua UART. Đây là dự án mẫu, hãy thay bằng dự án của bạn.",
+      tags: ["STM32", "I2C", "UART"], repo: "https://github.com/USERNAME/ten-repo", demo: "" },
+    { name: "Driver GPIO cho BeagleBone (mẫu)", desc: "Viết kernel module điều khiển LED qua GPIO và device tree.",
+      tags: ["Linux", "Driver"], repo: "https://github.com/USERNAME/ten-repo-2", demo: "" }
+  ]
+};
+/* ========================================= */
+
+const $ = s => document.querySelector(s), app = $('#app');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = d => new Date(d).toLocaleDateString('vi-VN');
+const posts = [...CONFIG.posts].sort((a, b) => b.date.localeCompare(a.date));
+const allTags = [...new Set(posts.flatMap(p => p.tags))];
+const tagHTML = t => `<span class="tag">${esc(t)}</span>`;
+let q = '', tag = '', nav = 0;
+
+$('#logo').textContent = CONFIG.name + ' / embedded';
+$('#foot').textContent = '© ' + new Date().getFullYear() + ' ' + CONFIG.name + '. Viết bằng HTML thuần, chạy trên GitHub Pages.';
+$('#theme').onclick = () => {
+  const r = document.documentElement;
+  r.dataset.theme = r.dataset.theme === 'dark' ? 'light' : 'dark';
+  try { localStorage.setItem('t', r.dataset.theme) } catch (e) {}
+};
+
+function wave() {
+  let c = 'M0 46', d = 'M0 116';
+  for (let i = 0; i < 8; i++) c += `H${i*80+20}V16H${i*80+60}V46`;
+  c += 'H640';
+  [1,0,1,1,0,0,1,0].forEach((b, i) => d += `L${i*80+8} ${b?86:116}H${i*80+80}`);
+  return `<svg class="wave" viewBox="0 0 640 130" role="img" aria-label="Biểu đồ xung CLK và DATA"><text x="0" y="10">CLK</text><text x="0" y="78">DATA</text><path pathLength="1" d="${c}"/><path pathLength="1" d="${d}"/></svg>`;
+}
+
+function list() {
+  const k = q.toLowerCase();
+  const r = posts.filter(p => (!tag || p.tags.includes(tag)) && (p.title + p.summary + p.tags.join(' ')).toLowerCase().includes(k));
+  $('#list').innerHTML = r.map(p => `<a class="post" href="#/post/${encodeURIComponent(p.slug)}"><time>${fmt(p.date)}</time><div><h3>${esc(p.title)}</h3><p>${esc(p.summary)}</p><div class="tags">${p.tags.map(tagHTML).join('')}</div></div></a>`).join('')
+    || '<p>Không có bài nào khớp. Thử bỏ bộ lọc hoặc đổi từ khoá.</p>';
+  $('#tg').innerHTML = ['', ...allTags].map(t => `<button class="tag${t === tag ? ' on' : ''}" data-t="${esc(t)}">${t ? esc(t) : 'Tất cả'}</button>`).join('');
+}
+
+function home() {
+  app.innerHTML = `<section class="hero"><h1>${esc(CONFIG.headline)}</h1><p>${esc(CONFIG.bio)}</p>${wave()}</section>
+  <div class="tools"><input id="q" type="search" placeholder="Tìm bài viết..." aria-label="Tìm bài viết" value="${esc(q)}"><div class="tags" id="tg"></div></div><div id="list"></div>`;
+  $('#q').oninput = e => { q = e.target.value; list(); };
+  $('#tg').onclick = e => { const b = e.target.closest('[data-t]'); if (b) { tag = b.dataset.t; list(); } };
+  list();
+}
+
+function projects() {
+  app.innerHTML = `<h2 class="page">Dự án</h2><p class="meta">Những thứ mình đã tự làm.</p><div class="grid">` + CONFIG.projects.map(p =>
+    `<div class="proj"><h3>${esc(p.name)}</h3><p>${esc(p.desc)}</p><div class="tags">${p.tags.map(tagHTML).join('')}</div>
+    <div class="links">${p.repo ? `<a href="${esc(p.repo)}" target="_blank" rel="noopener">Mã nguồn</a>` : ''}${p.demo ? `<a href="${esc(p.demo)}" target="_blank" rel="noopener">Demo</a>` : ''}</div></div>`).join('') + `</div>`;
+}
+
+function about() {
+  app.innerHTML = `<h2 class="page">Giới thiệu</h2><p>${esc(CONFIG.about)}</p><h3>Kỹ năng</h3><div class="tags">${CONFIG.skills.map(tagHTML).join('')}</div>
+  <h3>Liên hệ</h3><p><a href="${esc(CONFIG.github)}" target="_blank" rel="noopener">GitHub</a> &nbsp; <a href="mailto:${esc(CONFIG.email)}">${esc(CONFIG.email)}</a></p>`;
+}
+
+async function post(slug, id) {
+  const p = posts.find(x => x.slug === slug);
+  if (!p) { app.innerHTML = '<a class="back" href="#/">← Tất cả bài viết</a><h2 class="page">Không tìm thấy bài viết</h2><p>Kiểm tra lại đường dẫn hoặc quay về danh sách.</p>'; return; }
+  document.title = p.title + ' | ' + CONFIG.name;
+  app.innerHTML = `<a class="back" href="#/">← Tất cả bài viết</a><article><time class="meta">${fmt(p.date)}</time><h1>${esc(p.title)}</h1><div class="tags">${p.tags.map(tagHTML).join('')}</div><div class="md" id="md">Đang tải bài viết...</div></article>`;
+  let md = p.content;
+  if (md == null) {
+    try { const r = await fetch(p.file); if (!r.ok) throw 0; md = await r.text(); }
+    catch (e) { md = '**Không tải được ' + p.file + '.** Kiểm tra tên file trong thư mục posts. Nếu mở bằng file://, hãy chạy máy chủ cục bộ.'; }
+  }
+  if (id !== nav) return;
+  const el = $('#md');
+  el.innerHTML = window.marked ? marked.parse(md) : '<pre>' + esc(md) + '</pre>';
+  el.querySelectorAll('pre').forEach(pre => {
+    const c = pre.querySelector('code');
+    if (window.hljs && c) hljs.highlightElement(c);
+    const b = document.createElement('button');
+    b.className = 'cp'; b.textContent = 'Sao chép';
+    b.onclick = () => { navigator.clipboard.writeText((c || pre).textContent); b.textContent = 'Đã chép'; setTimeout(() => b.textContent = 'Sao chép', 1500); };
+    pre.append(b);
+  });
+}
+
+function route() {
+  const id = ++nav, [, p, a] = (location.hash.slice(1) || '/').split('/');
+  document.querySelectorAll('nav a').forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#/' + (p === 'post' ? '' : p || '')));
+  document.title = CONFIG.name + ' | Embedded blog';
+  scrollTo(0, 0);
+  if (p === 'projects') return projects();
+  if (p === 'about') return about();
+  if (p === 'post') return post(decodeURIComponent(a || ''), id);
+  home();
+}
+addEventListener('hashchange', route);
+route();
+</script>
+</body>
+</html>
